@@ -4,28 +4,32 @@
 server=$1
 svrtest=":$server:"
 
+# generalize executable locations
+EXPRESSVPN=$(which expressvpn)
+XTERM=$(which xterm)
+
 # check for input to disconnect, else set default server
 if [ $svrtest == ":disconnect:" ]; then
-   /usr/bin/expressvpn disconnect
+   $EXPRESSVPN disconnect
 elif [ $svrtest == ":list:" ]; then
-   /usr/bin/expressvpn list
+   $EXPRESSVPN list
 elif [ $svrtest == "::" ]; then
    server=usda2
    echo "*** Starting EXPRESSVPN with connection to: $server"
-   /usr/bin/expressvpn connect $server
-   /usr/bin/xterm -T "ATTACHED"		\
+   $EXPRESSVPN connect $server
+   $XTERM -T "ATTACHED"		\
 		-bg Black 		\
 		-fg Yellow		\
 		-geometry 30x4		\
 		-e watch 		\
-		-g /usr/bin/expressvpn status &
+		-g $EXPRESSVPN status &
 else
    echo "*** Starting EXPRESSVPN with connection to: $server"
-   /usr/bin/expressvpn connect $server
-   /usr/bin/xterm -T "ATTACHED"		\
+   $EXPRESSVPN connect $server
+   $XTERM -T "ATTACHED"		\
 		-bg Black 		\
 		-fg Yellow		\
 		-geometry 30x4		\
 		-e watch 		\
-		-g /usr/bin/expressvpn status &
+		-g $EXPRESSVPN status &
 fi
